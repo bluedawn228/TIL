@@ -1,12 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <title>DOMContentLoaded</title>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                let status = false
+                const checkbox = document.querySelector('input')
+                checkbox.addEventListener('change', (event) => {
+                    status = event.currentTarget.checked
+                })
 
-    <title></title>
-
-    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
-    <script src = test.js></script>
-</head>
-<body>
-</body>
-</html>
+                const link = document.querySelector('a')
+                link.addEventListener('click', (event) => {
+                    if (!status) {
+                        event.preventDefault()
+                        // status가 false가 아니면 링크의 기본 이벤트를 제거한다
+                    }
+                })
+            })
+        </script>
+    </head>
+    <body>
+        <input type="checkbox">
+        <span>링크 활성화</span>
+        <br>
+        <a href="http://hanbit.co.kr">한빛미디어</a>
+    </body>
+    </html>

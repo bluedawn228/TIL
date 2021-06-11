@@ -1,10 +1,11 @@
-const object = {
-    name : '혼자 공부하는 파이썬',
-    price : 180000,
-    publisher : '한빛미디어'
+const listner = function (event) {
+    const length = this.value.length // this가 textarea가 된다.
+    h1.textContent = `글자 수: ${length}`
 }
 
-object.name = object.name || '제목 미정'
-object.author = object.author || '저자 미상'
+document.addEventListener('DOMContentLoaded', () => {
+    const textarea = document.querySelector('textarea')
+    const h1 = document.querySelector('h1')
 
-console.log(JSON.stringify(object, null ,2))
+    textarea.addEventListener('keyup', listener)
+})
