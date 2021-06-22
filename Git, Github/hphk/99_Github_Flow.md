@@ -197,7 +197,7 @@ fork-pull-model.git
 Pull request를 활용하면, 작업된 이력에 작성된 `코드 라인별로` 리뷰를 작성할 수도 있다.  
 * 물론, close가 될 수도 있다  
 
-**참고**
+**참고해야할 자료**  
 https://git-scm.com/book/ko/v2  
 https://guides.github.com/  
 https://guides.github.com/introduction/flow/  
