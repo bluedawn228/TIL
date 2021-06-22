@@ -36,7 +36,7 @@ Github Flow, Gitlab Flow 등의 각 서비스별 제안되는 흐름이 있으�
 
 **1. Branch merge - fast forward**  
 git merge feature-a  
-![image](https://user-images.githubusercontent.com/68311318/122927653-0ceeb580-d3a4-11eb-98c3-af1e360ce37e.png)
+![image](https://user-images.githubusercontent.com/68311318/122927653-0ceeb580-d3a4-11eb-98c3-af1e360ce37e.png)  
 **2. Branch merge - merge commit**  
 git merge feature-a  
 ![image](https://user-images.githubusercontent.com/68311318/122928028-6ce55c00-d3a4-11eb-8f0f-56c19f9e4cb6.png)  
@@ -52,6 +52,8 @@ git merge -no-ff feature-a
 **Branch rebase**  
 rebase는 merge와 최종 결과는 같으나, commit history만 다르게 형성된다. 따라서, remote repository에 push된 commit에 대해서는 절대 rebase를 진행하면 안된다. 나중에 공부하자.  
 https://git-scm.com/book/ko/v2/Git-%EB%B8%8C%EB%9E%9C%EC%B9%98-Rebase-%ED%95%98%EA%B8%B0  
+
+---
 
 ## Github Flow 기본 원칙
 Github Flow는 Github에서 제안하는 브랜치 전략으로 다음과 같은 기본 원칙을 가지고 있다.  
@@ -72,6 +74,8 @@ Pull Requests are useful for contributing to open source projects and for managi
 5. 변경사항을 반영하고 싶다면, `master` branch에 `병합`한다.  
 Now that your changes have been verified in production, it is time to merge your code into the master branch.  
 
+---
+
 ### Github Flow Models  
 앞서 설명된 기본 원칙 아래 Github에서 제시하는 방법이 2가지가 있다.  
 - Shared Repository Model
@@ -80,10 +84,11 @@ Now that your changes have been verified in production, it is time to merge your
 이 두 모델의 가장 큰 차이점은 내(작업자)가 해당 프로젝트 저장소에 직접적인 push 권한이 있는지 여부!  
 https://guides.github.com/를 참고하라  
 
+---
+
 #### 1. Shared Repository Model
 Shared Repository Model은 동일한 저장소를 공유하여 활용하는 방식.  
 
-순서  
 
 **0-1. Invite collaborator**  
 당 저장소에 대한 push 권한이 부여된다.  
@@ -145,7 +150,7 @@ https://docs.github.com/en/github/collaborating-with-pull-requests/incorporating
 ![image](https://user-images.githubusercontent.com/68311318/122934750-c6508980-d3aa-11eb-93a6-20ad528f5d6f.png)  
 
 **step 4. while True**  
-" $ 다음 작업 준비!  
+다음 작업 준비!  
 * 로컬 저장소에서는 `merge된 branch는 삭제`하고 master branch를 업데이트 한다.  
 * 이후 1~3 과정을 반복한다.  
 ```
@@ -157,6 +162,8 @@ https://docs.github.com/en/github/collaborating-with-pull-requests/incorporating
 ```
 로컬에서는 브랜치 삭제했는데, 원격에서 따로 delete branch 버튼눌러서 삭제해야하는건가?  
 
+---
+
 #### 2. Fork & Pull Model
 Fork & Pull Model은 Repository에 Collaborator에 등록되지 않고,
 Pull request를 통한 협업이 가능. Github 기반의 `오픈소스` 참여 과정에서 쓰이는 방식.  
@@ -166,10 +173,10 @@ Pull request를 통한 협업이 가능. Github 기반의 `오픈소스` 참여 
 * 내 저장소로 복제본을 가져옴으로써 로컬에서 작업 후 원격 저장소로 push할 수 있게 되는 것.  
 
 **3-1까지 동일**  
-**3-2. 위와 유사**  
-PR과 관련된 설정을 진행한 후 요청을 생성한다.  
-자동으로 fork 대상 저장소를 base repository로 설정하는 것을 확인할 수 있다.
-**동일**  
+**3-2. 위와 유사**    
+브랜치를 잘 보자.  
+그리고`자동으로` `fork 대상 저장소`를 `base repository로 설정`하는 것을 확인할 수 있다.  
+**위와 동일**  
 **4.while True: but, upstream"!!(위와 다름)**  
 다음 작업 준비!  
 * 기존에는 단순히 새로 반영된 내용을 받아오기 위하여 origin으로 부터 pull을 받아왔지만,  
@@ -191,11 +198,64 @@ fork-pull-model.git
 **정리**  
 * 앞서 설명한 대로 Fork & Pull Model은 내가 직접적인 push 권한이 없다는 것이다!  
 * 즉, 오픈소스 프로젝트에 참여하기 위해서는 반드시 `이 모델`로 구성을 해야한다.  
-![image](https://user-images.githubusercontent.com/68311318/122939361-84c1dd80-d3ae-11eb-9194-5a76a0e31f31.png)  
+![image](https://user-images.githubusercontent.com/68311318/122939361-84c1dd80-d3ae-11eb-9194-5a76a0e31f31.png) 
+
+---
+
+**순서요약**  
+1. 레포 공유하는 모델
+- 초대 및 수락
+- 클론
+- 
+```
+(master) $ git checkout -b feature/accounts-login
+
+(feature/accounts-login) $ touch develop-login.txt
+(feature/accounts-login) $ git add develop-login.txt
+(feature/accounts-login) $ git commit -m ‘Complete login feature’
+(feature/accounts-login) $ git push origin feature/accounts-login
+```
+- github에서 pr(open, create, merge)
+- 로컬에서
+```
+(feature/accounts-login) $ git checkout master
+(master) $ git branch -d feature/accounts-login
+(master) $ git pull origin master
+(master) $ git checkout -b feature/new-feature
+(feature/new-feature) $
+```
+- github에서 브랜치 삭제
+
+2. 오픈소스에 푸시하는 모델
+- fork
+- 클론
+- 
+```
+(master) $ git checkout -b feature/accounts-login
+
+(feature/accounts-login) $ touch develop-login.txt
+(feature/accounts-login) $ git add develop-login.txt
+(feature/accounts-login) $ git commit -m ‘Complete login feature’
+(feature/accounts-login) $ git push origin feature/accounts-login
+```
+- github에서 pr(open, create, merge)
+  - 브랜치를 잘 보자.  
+  그리고 `자동으로` `fork 대상 저장소`를 `base repository로 설정`하는 것을 확인할 수 있다. 
+- 로컬에서
+```
+(feature/accounts-login) $ git checkout master
+(master) $ git branch -d feature/accounts-login
+(master) $ git pull origin master
+(master) $ git checkout -b feature/new-feature
+(feature/new-feature) $
+```
+- github에서 브랜치 삭제
+
+---
 
 **부록 : Review, Close 등**  
 Pull request를 활용하면, 작업된 이력에 작성된 `코드 라인별로` 리뷰를 작성할 수도 있다.  
-* 물론, close가 될 수도 있다  
+물론, close가 될 수도 있다  
 
 **참고해야할 자료**  
 https://git-scm.com/book/ko/v2  
@@ -210,3 +270,9 @@ https://github.com/mingrammer/git-tips (한국어 번역)
 **프로젝트 시작전에 잊지 말아야 할 .gitignore**  
 https://github.com/github/gitignore/blob/master/Python.gitignore  
 https://github.com/github/gitignore/blob/master/Node.gitignore  
+
+**git bash, vscode, typora 설치가이드**  
+https://www.notion.so/fc04bcef5aa345b1b17c3dcef7c4012d?v=0517ed92000649d3b09352adbf2f3edc  
+
+**기타 학습참고자료**  
+https://www.notion.so/9e6e28f7a4774ad9913061f94bfa685f
