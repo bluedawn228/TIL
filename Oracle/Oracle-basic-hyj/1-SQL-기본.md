@@ -1,3 +1,4 @@
+# SQL 기본
 ```sql
 select dname, 'it''s deptno : ', deptno "DNAME AND DEPTNO" from dept;
 ```
@@ -13,6 +14,7 @@ OPERATIONS     it's deptno :                40
 
 ```
 ```sql
+select dname, q'[안녕]', 'it''s deptno : ', deptno "DNAME AND DEPTNO" from dept;
 select distinct job from emp; -- 중복컬럼제거
 select distinct job, ename from emp; -- 두개컬럼을 묶어서 유니크한거처럼 생각하자
 select job, distinct ename from emp; -- 당연히 불가능하다. 그래서 distinct는 항상 맨 앞에 써야한다
@@ -46,7 +48,7 @@ select profno, name, deptno, 1 from professor where deptno = 101
 union
 select studno, name, deptno1, 2 from student where deptno1 = 101;
 /*
-union all은 중복 제거하지 않을때, 그리고 정렬도 다르다. 별로 중요하진 않다
+union all은 중복 허용. 그리고 정렬도 다르다. 별로 중요하진 않다
 */
 ```
 실행결과
@@ -64,17 +66,39 @@ union all은 중복 제거하지 않을때, 그리고 정렬도 다르다. 별�
 1과 2는 단순히 교수와 학생을 구분하기 위한것. 이런 융통성이 필요하다.  
 
 ```sql
+-- 교집합
+select studno, name from student where deptno1=101
+intersect
+select studno, name from student where deptno2=201;
+```
+
+```sql
+-- 차집합
+select studno, name from student where deptno1=101
+minus
+select studno, name from student where deptno2=201;
+```
+
+```sql
 select ename, sal+comm from emp;
 select ename, sal*12 from emp;
 ```
 위처럼 산술연산자를 쓸수있다. 근데 컬럼 하나라도 null이면 연산결과가 null이 나온다.  
 
 ```sql
+where hiredate > '85/01/01';
+where hiredate between '81/01/01' and '81/12/31'; 
+where grade in(2,3,4);
+where grade not in(2,3,4);
+where name like '서%';
 where hiredate like '81%'; -- 81년도에 입사한 사람
 where hiredate like '%/05/%'; -- 5월에 입사한 사람
+where comm is null;
+where comm is not null;
 ```
 
 ```sql
 select * from emp where empno = &id;
 ```
 위를 실행하면 입력값을 받는다  
+
